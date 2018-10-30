@@ -1,0 +1,13 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:id="@+id/widget_plant_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/grass"
+        android:contentDescription="@string/default_widget_image"/>
+
+</RelativeLayout>
