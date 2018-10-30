@@ -29,7 +29,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
 
     // TODO (1): Modify updateAppWidget method to take an image recourse and call
     // setImageViewResource to update the widget’s image
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int img,
                                 int appWidgetId) {
 
         // Create an Intent to launch MainActivity when clicked
@@ -38,7 +38,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.plant_widget);
         // Widgets allow click handlers to only launch pending intents
-        views.setOnClickPendingIntent(R.id.widget_plant_image, pendingIntent);
+        views.setOnClickPendingIntent(img, pendingIntent);
         // Add the wateringservice click handler
         Intent wateringIntent = new Intent(context, PlantWateringService.class);
         wateringIntent.setAction(PlantWateringService.ACTION_WATER_PLANTS);
@@ -52,12 +52,17 @@ public class PlantWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // TODO (2): Move the updateAppWidget loop to a new method called updatePlantWidgets and pass through the image recourse
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+        
         // TODO (4): Call startActionUpdatePlantWidgets in onUpdate as well as in AddPlantActivity and PlantDetailActivity (add and delete plants)
+        PlantWateringService.startActionUpdatePlantWidget(context);
     }
 
+    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager, int img,
+                                          int [] appWidgetIds){
+        for (int appWidget:appWidgetIds) {
+                updateAppWidget(context,appWidgetManager,img,appWidget);
+        }
+    }
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         // Perform any action when one or more AppWidget instances have been deleted
